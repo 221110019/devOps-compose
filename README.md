@@ -22,8 +22,6 @@ docker compose pull
 docker compose up
 atau
 docker compose up -d
-atau
-docker-compose up -d && docker-compose logs -f laravel.test-1`
 ```
 
 - Akses web appp di http://localhost
