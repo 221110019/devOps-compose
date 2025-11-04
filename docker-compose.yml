@@ -3,13 +3,25 @@ services:
     image: 221110019/devops-laravel:latest
     container_name: laravel-app
     restart: unless-stopped
+    working_dir: /var/www
     volumes:
       - laravel-storage:/var/www/storage
       - laravel-bootstrap-cache:/var/www/bootstrap/cache
+    environment:
+      - DB_HOST=laravel-db
+      - DB_PORT=3306
+      - DB_DATABASE=laravel
+      - DB_USERNAME=laravel
+      - DB_PASSWORD=secret
     networks:
       - laravel-network
     depends_on:
       - laravel-db
+    healthcheck:
+      test: ["CMD", "php", "artisan", "db:monitor", "--count=1", "--max=1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   laravel-db:
     image: mysql:8.0
@@ -24,6 +36,11 @@ services:
       - laravel-mysql-data:/var/lib/mysql
     networks:
       - laravel-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   nginx:
     image: nginx:alpine
@@ -33,10 +50,12 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - laravel-storage:/var/www/storage:ro
     networks:
       - laravel-network
     depends_on:
-      - laravel-app
+      laravel-app:
+        condition: service_healthy
 
 networks:
   laravel-network:
