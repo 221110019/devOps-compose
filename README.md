@@ -1,14 +1,32 @@
+# Setup & Run
+
+- Harus Install Docker Desktop dan WSL2 (disarankan Ubuntu)
+- Docker Desktop with WSL2 engine integration enabled pada setting
+- Buka terminal Ubuntu
+- (opsional) cd ke path folder
+
+```bash
+git clone https://github.com/221110019/devOps-compose.git
+```
+
+- cd ke folder clone
+- Pull build image terbaru dari Docker Hub
+
+```bash
+docker compose pull
+```
+
 - Start
 
 ```bash
-docker-compose up -d
+docker compose up
+atau
+docker compose up -d
+atau
+docker-compose up -d && docker-compose logs -f laravel.test-1`
 ```
 
-- Start with only laravel-app log
-
-```bash
-docker-compose up -d && docker-compose logs -f laravel-app
-```
+- Akses web appp di http://localhost
 
 - Stop
 
@@ -22,8 +40,10 @@ docker compose stop
 docker compose down
 ```
 
-- Pull latest Docker image
+- Remove all container, volume, and image
 
 ```bash
-docker-compose pull
+docker container prune -f
+docker volume prune -a -f
+docker system prune -a -f
 ```
