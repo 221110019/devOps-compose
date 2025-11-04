@@ -1,25 +1,18 @@
 services:
     laravel.test:
         image: '221110019/devops-laravel:latest'
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
         ports:
             - '80:80'
         environment:
-            WWWUSER: '1000'
-            LARAVEL_SAIL: 1
-        volumes:
-            - 'laravel-storage:/var/www/html/storage'
-            - 'laravel-bootstrap-cache:/var/www/html/bootstrap/cache'
-        networks:
-            - sail
+            DB_HOST: mysql
+            DB_DATABASE: laravel
+            DB_USERNAME: sail
+            DB_PASSWORD: password
         depends_on:
             - mysql
 
     mysql:
         image: 'mysql/mysql-server:8.0'
-        ports:
-            - '3306:3306'
         environment:
             MYSQL_ROOT_PASSWORD: 'password'
             MYSQL_DATABASE: 'laravel'
@@ -28,25 +21,7 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
             - 'sail-mysql:/var/lib/mysql'
-        networks:
-            - sail
-        healthcheck:
-            test:
-                - CMD
-                - mysqladmin
-                - ping
-                - '-ppassword'
-            retries: 3
-            timeout: 5s
-
-networks:
-    sail:
-        driver: bridge
 
 volumes:
     sail-mysql:
-        driver: local
-    laravel-storage:
-        driver: local
-    laravel-bootstrap-cache:
         driver: local
