@@ -15,3 +15,9 @@ docker compose stop
 ```bash
 docker compose down
 ```
+
+- Pull latest Docker image
+
+```bash
+docker-compose pull
+```
