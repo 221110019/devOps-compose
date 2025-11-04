@@ -24,7 +24,7 @@ atau
 docker compose up -d
 ```
 
-- Akses web appp di http://localhost
+- Akses web app di http://localhost
 
 - Stop
 
