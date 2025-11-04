@@ -1,13 +1,13 @@
-version: '3.8'
 services:
   laravel-app:
     image: 221110019/devops-laravel:latest
     container_name: laravel-app
     restart: unless-stopped
     working_dir: /var/www
+    user: "1000:1000"
     volumes:
-      - laravel-storage:/var/www/storage
-      - laravel-bootstrap-cache:/var/www/bootstrap/cache
+      - ./storage:/var/www/storage
+      - ./bootstrap/cache:/var/www/bootstrap/cache
     environment:
       - DB_HOST=laravel-db
       - DB_PORT=3306
@@ -41,7 +41,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - laravel-storage:/var/www/storage:ro
+      - ./storage:/var/www/storage:ro
     networks:
       - laravel-network
     depends_on:
@@ -53,8 +53,4 @@ networks:
 
 volumes:
   laravel-mysql-data:
-    driver: local
-  laravel-storage:
-    driver: local
-  laravel-bootstrap-cache:
     driver: local
