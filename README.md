@@ -4,6 +4,12 @@
 docker-compose up -d
 ```
 
+- Start with only laravel-app log
+
+```bash
+docker-compose up -d && docker-compose logs -f laravel-app
+```
+
 - Stop
 
 ```bash

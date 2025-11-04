@@ -4,6 +4,7 @@ services:
     container_name: laravel-app
     restart: unless-stopped
     working_dir: /var/www
+    user: root
     volumes:
       - laravel-storage:/var/www/storage
       - laravel-bootstrap-cache:/var/www/bootstrap/cache
