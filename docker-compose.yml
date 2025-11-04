@@ -1,19 +1,12 @@
+version: '3.8'
 services:
   laravel-app:
     image: 221110019/devops-laravel:latest
     container_name: laravel-app
     restart: unless-stopped
-    working_dir: /var/www
-    user: root
     volumes:
       - laravel-storage:/var/www/storage
       - laravel-bootstrap-cache:/var/www/bootstrap/cache
-    environment:
-      - DB_HOST=laravel-db
-      - DB_PORT=3306
-      - DB_DATABASE=laravel
-      - DB_USERNAME=laravel
-      - DB_PASSWORD=secret
     networks:
       - laravel-network
     depends_on:
