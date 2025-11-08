@@ -6,7 +6,7 @@
 - (opsional) cd ke path folder
 
 ```bash
-git clone https://github.com/221110019/devOps-compose.git
+git clone https://github.com/221110019/CatCanine-ViewOnly.git
 ```
 
 - cd ke folder clone
